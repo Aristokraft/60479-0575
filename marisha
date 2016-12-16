@@ -1,0 +1,68 @@
+program Project1;
+
+{$APPTYPE CONSOLE}
+
+uses
+  SysUtils;
+
+Type
+vector = array [1..36] of integer;
+matrix = array [1..7,1..7] of integer;
+
+var
+D : matrix;
+i, j, n, k, max, temp, maxnum : integer;
+fl : boolean;
+R : vector;
+
+begin
+n := 7;
+writeln ('Введите матрицу D (7*7)');
+for i := 1 to n do
+  begin
+  write ('[',i,'] ');
+    for j := 1 to n do
+      read (D [ i , j ]);
+  end ;
+fl := false;
+k := 0;
+for i := 2 to n do
+  begin
+    for j := n downto n - i do
+      if D[i,j] < 0 then
+        begin
+          fl := true;
+          k := k + 1;
+          R[k] := D[i,j];
+        end;
+  end;
+if (fl = true) then
+  begin
+    max := 0;
+    maxnum := 0;
+      for i := 1 to k do
+        if R[i] > max then
+          begin
+            max := R[i];
+            maxnum := i;
+          end;
+
+    temp := R[maxnum];
+    R[maxnum] := R[1];
+    R[1] := temp;
+    writeln ('Вектор R:');
+    for i := 1 to n do
+      write ( R[i]:3);
+    writeln;
+  end
+else
+  writeln ('Отрицательные элементы не были найдены!');
+writeln ('Матрица D:');
+for i := 1 to n do
+  begin
+  for j := 1 to n do
+      write (D [ i , j ] : 3);
+   writeln;
+  end;
+  readln;
+end.
